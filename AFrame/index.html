@@ -12,25 +12,38 @@
 
 <body>
     <a-scene background="color: #FAFAFA">
-        <a-entity camera look-controls>
-
-            <a-entity raycaster="objects: .clickable" smart-cursor="retical: #retical"  /></a-entity>
-            <a-entity raycaster="objects: .clickable" id='retical' cursor="fuse: true"
-                animation__click="property: scale; startEvents: click; easing: easeInOutElastic; dur: 150; from: 0.25 0.25 0.25; to: 1 1 1"
-                animation__fusing="property: scale; startEvents: fusing; easing: linear; dur: 1500; from: 1 1 1; to: 0.25 0.25 0.25"
-                animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInOutSine; dur: 100; to: 1 1 1"
-                material="color: black; shader: flat" position="0 0 -1"
-                geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03">
-            </a-entity>
+        <a-assets>
+            <a-asset-item id="dragon" src="assets/models/dragon.gltf">
+            </a-asset-item>
+            <a-asset-item id="ship" src="assets/models/ship.gltf">
+            </a-asset-item>
+        </a-assets>
+        <a-entity camera look-controls="pointerLockEnabled: true">
+            <a-entity raycaster="objects: .clickable" smart-cursor="retical: #retical" />
         </a-entity>
 
-        <a-entity laser-controls="hand: left" raycaster="objects: .links; far: 5"></a-entity>        
-        <a-entity laser-controls="hand: right" raycaster="objects: .links; far: 5"></a-entity>
+
+        <a-entity raycaster="objects: .clickable" id='retical' cursor="fuse: true"
+            animation__click="property: scale; startEvents: click; easing: easeInOutElastic; dur: 150; from: 0.25 0.25 0.25; to: 1 1 1"
+            animation__fusing="property: scale; startEvents: fusing; easing: linear; dur: 1500; from: 1 1 1; to: 0.25 0.25 0.25"
+            animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInOutSine; dur: 100; to: 1 1 1"
+            material="color: black; shader: flat" position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03">
+        </a-entity>
+        </a-entity>
+
+        <a-entity laser-controls="hand: left" raycaster="objects: .clickable"></a-entity>
+        <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
 
         <a-sky src="assets/background.jpg"></a-sky>
 
-        <a-box class="clickable" position="-1 0.5 -3" rotation="30 10 45" color="#4CC3D9" shadow duck="speed: .003"></a-box>
-        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
+        <a-entity position="-1 0.5 -3" rotation="30 10 45" duck="speed: .003; minDistance: 2">
+            <a-entity class="clickable" position="-1.5 -1 -2.5" scale="0.025 0.025 0.025" gltf-model="#dragon" shadow>
+            </a-entity>
+        </a-entity>
+        <a-entity position="0 1.25 -5" radius="1.25" color="#EF2D5E" duck="speed: .004; minDistance: 2">
+            <a-entity class="clickable" position="0 0 0" scale=".1 .1 .1" gltf-model="#ship" shadow></a-entity>
+        </a-entity>
     </a-scene>
 </body>
 
