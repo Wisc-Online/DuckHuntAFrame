@@ -5,7 +5,7 @@ AFRAME.registerSystem('duck-hunt', {
             default: null
         },
         startScreenElements: {
-            type: 'selectorAll'
+            type: 'selectorAll',
         }
     },
     init: function () {
@@ -15,14 +15,19 @@ AFRAME.registerSystem('duck-hunt', {
         self.utils = {
             show: function (el) {
                 el.setAttribute("visible", "true");
+            },
+            hide: function (el) {
+                el.setAttribute("visible", "false");
             }
         };
 
         self.startScreen = {
             handleStartButtonClick: function () {
                 console.log("you clicked start!");
+
+                self.startScreen.end();
             },
-            show: function () {
+            start: function () {
                 self.data.startButton.addEventListener("click", self.startScreen.handleStartButtonClick);
 
                 if (self.data.startScreenElements) {
@@ -31,18 +36,57 @@ AFRAME.registerSystem('duck-hunt', {
                     }
                 }
             },
-            hide: function () {
-                self.data.startButton.removeEventListener("click", this.startScreen.handleStartButtonClick);
+            end: function () {
+                self.data.startButton.removeEventListener("click", self.startScreen.handleStartButtonClick);
+
+                if (self.data.startScreenElements) {
+                    for (var i = 0; i < self.data.startScreenElements.length; ++i) {
+                        self.utils.hide(self.data.startScreenElements[i]);
+                    }
+                }
             }
         }
 
+        self.levelIntroScreen = {
+            start: function(){
+                // show the animation of the dog jumping into the grass
 
-        this.startScreen.show();
+                setTimeout(self.levelIntroScreen.end, 5000);
+            },
+            end: function(){
+                // hide the dog
+
+
+            }
+        }
+
+        self.duckHuntScreen = {
+            start : function(){
+
+            },
+            end: function(){
+
+            }
+        }
+
+        
+
+
+        this.startScreen.start();
     },
     pause: function () {
-
+        
     },
     play: function () {
+        // show start screen, wait for user to choose start
+        
+        // show dog animation (jump into field) with round number
+        
+        // spawn a duck, give the user 3 shots (or XXX second timeout --> duck flies away)
+
+        // dog retrieves duck or dog laughs at you
+
+        // spawn another duck..  (repeat)
 
     },
     tick: function () {
