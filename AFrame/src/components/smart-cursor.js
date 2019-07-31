@@ -20,13 +20,14 @@ AFRAME.registerComponent('smart-cursor', {
             updateCursor();
         });
 
-        function showRetical() {
+        function showRetical(disableFuse) {
             var r = data.retical.components['cursor'];
 
             r.el.setAttribute('visible', true);
             r.play();
 
             el.setAttribute('cursor', 'rayOrigin', null);
+            r.el.setAttribute("fuse", !disableFuse);
         }
 
         function hideRetical() {
@@ -72,7 +73,7 @@ AFRAME.registerComponent('smart-cursor', {
                 // see if pointer-lock is enabled.  If so, then show the retical
 
                 if (document.pointerLockElement || document.mozPointerLockElement) {
-                    showRetical();
+                    showRetical(true);
                 }
                 else {
                     hideRetical();

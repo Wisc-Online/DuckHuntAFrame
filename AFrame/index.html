@@ -6,31 +6,50 @@
     <title>Duck Hunt</title>
     <meta name="description" content="Hello, WebVR! � A-Frame">
     <script src="lib/aframe.min.js"></script>
-    <script src="src/duck.js"></script>
-    <script src="src/smart-cursor.js"></script>
+    <script src="lib/aframe-extras.min.js"></script>
+    <script src="src/components/duck.js"></script>
+    <script src="src/components/smart-cursor.js"></script>
+    <script src="src/systems/duck-hunt.js"></script>
 </head>
 
 <body>
-    <a-scene background="color: #FAFAFA">
+    <a-scene background="color: #FAFAFA" duck-hunt="startButton: #startButton">
         <a-assets>
             <a-asset-item id="dragon" src="assets/models/dragon.gltf">
             </a-asset-item>
             <a-asset-item id="ship" src="assets/models/ship.gltf">
             </a-asset-item>
         </a-assets>
-        <a-entity camera look-controls="pointerLockEnabled: true">
-            <a-entity raycaster="objects: .clickable" smart-cursor="retical: #retical" />
+        <a-entity id="rig" movement-controls>
+            <a-entity camera look-controls="pointerLockEnabled: false">
+                <a-entity position="0 1.6 0" raycaster="objects: .clickable" />
+            </a-entity>
+            <a-entity raycaster="objects: .clickable" id='retical' cursor="fuse: false"
+                animation__click="property: components.material.material.color; startEvents: click; type: color; to: #000; dur: 100;"
+                animation__mouseenter="property: components.material.material.color; startEvents: mouseenter; type: color; to: #0F4; dur: 100"
+                animation__mouseleave="property: components.material.material.color; startEvents: mouseleave; type: color; to: #0CF; dur: 500"
+                geometry="primitive: circle; radius: 0.04;"
+                material="color: #0cf; shader: flat; transparent: true; opacity:0.6" position="0 0 -1">
+                
+                <a-circle radius="0.004" color="white" position="0 0 0" rotation="0 0 0">
+
+                    <a-plane width="0.004" height="0.014" color="white" transparent="true" opacity="0.7"
+                        position="0 0.018 0.001" pivot="0 -0.0009 0" rotation="0 0 0"></a-plane>
+
+                    <a-plane width="0.004" height="0.014" color="white" transparent="true" opacity="0.7"
+                        position="0.018 0 0.001" pivot="0 -0.0009 0" rotation="0 0 90"></a-plane>
+
+                    <a-plane width="0.004" height="0.014" color="white" transparent="true" opacity="0.7"
+                        position="0 -0.018 0.001" pivot="0 -0.0009 0" rotation="0 0 180"></a-plane>
+
+                    <a-plane width="0.004" height="0.014" color="white" transparent="true" opacity="0.7"
+                        position="-0.018 0 0.001" pivot="0 -0.0009 0" rotation="0 0 270"></a-plane>
+                </a-circle>
+            </a-entity>
+
         </a-entity>
 
 
-        <a-entity raycaster="objects: .clickable" id='retical' cursor="fuse: true"
-            animation__click="property: scale; startEvents: click; easing: easeInOutElastic; dur: 150; from: 0.25 0.25 0.25; to: 1 1 1"
-            animation__fusing="property: scale; startEvents: fusing; easing: linear; dur: 1500; from: 1 1 1; to: 0.25 0.25 0.25"
-            animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInOutSine; dur: 100; to: 1 1 1"
-            material="color: black; shader: flat" position="0 0 -1"
-            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03">
-        </a-entity>
-        </a-entity>
 
         <a-entity laser-controls="hand: left" raycaster="objects: .clickable"></a-entity>
         <a-entity laser-controls="hand: right" raycaster="objects: .clickable"></a-entity>
@@ -44,6 +63,12 @@
         <a-entity position="0 1.25 -5" radius="1.25" color="#EF2D5E" duck="speed: .004; minDistance: 2">
             <a-entity class="clickable" position="0 0 0" scale=".1 .1 .1" gltf-model="#ship" shadow></a-entity>
         </a-entity>
+
+
+        <a-sphere class="clickable" position="2, 2, -2" id="startButton">
+
+        </a-sphere>
+
     </a-scene>
 </body>
 
