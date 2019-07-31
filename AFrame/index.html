@@ -14,9 +14,8 @@
     <a-scene background="color: #FAFAFA">
         <a-entity camera look-controls>
 
-            <a-entity smart-cursor="retical: #retical" /></a-entity>
-            <a-entity id='retical' cursor="fuse: true"
-                class="pointer"
+            <a-entity raycaster="objects: .clickable" smart-cursor="retical: #retical"  /></a-entity>
+            <a-entity raycaster="objects: .clickable" id='retical' cursor="fuse: true"
                 animation__click="property: scale; startEvents: click; easing: easeInOutElastic; dur: 150; from: 0.25 0.25 0.25; to: 1 1 1"
                 animation__fusing="property: scale; startEvents: fusing; easing: linear; dur: 1500; from: 1 1 1; to: 0.25 0.25 0.25"
                 animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInOutSine; dur: 100; to: 1 1 1"
@@ -25,13 +24,13 @@
             </a-entity>
         </a-entity>
 
-        <a-entity laser-controls raycaster="objects: .links; far: 5"></a-entity>
-
-
+        <a-entity laser-controls="hand: left" raycaster="objects: .links; far: 5"></a-entity>        
+        <a-entity laser-controls="hand: right" raycaster="objects: .links; far: 5"></a-entity>
 
         <a-sky src="assets/background.jpg"></a-sky>
-        <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9" shadow duck></a-box>
-        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow duck></a-sphere>
+
+        <a-box class="clickable" position="-1 0.5 -3" rotation="30 10 45" color="#4CC3D9" shadow duck="speed: .003"></a-box>
+        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E" shadow></a-sphere>
     </a-scene>
 </body>
 

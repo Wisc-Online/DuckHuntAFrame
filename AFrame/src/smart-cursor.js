@@ -1,35 +1,31 @@
 AFRAME.registerComponent('smart-cursor', {
     'dependencies': ['cursor', 'tracked-controls'],
     'schema': {
-        'retical' : {
+        'retical': {
             default: null,
             type: 'selector'
         }
     },
     'init': function () {
-        
+
         var data = this.data;
 
         var el = this.el;
 
-        var trackedControls = this.el.components['tracked-controls'];
+        window.addEventListener("gamepadconnected", function (e) {
+            updateCursor();
+        });
 
-        if (trackedControls){
-            trackedControls.el.addEventListener('controllerconnected', function(){
-                updateCursor();
-            });
-
-            trackedControls.el.addEventListener('controllerdisconnected', function(){
-                updateCursor();
-            });
-        }
+        window.addEventListener("gamepaddisconnected", function (e) {
+            updateCursor();
+        });
 
         function showRetical() {
             var r = data.retical.components['cursor'];
 
             r.el.setAttribute('visible', true);
             r.play();
-            
+
             el.setAttribute('cursor', 'rayOrigin', null);
         }
 
@@ -51,6 +47,15 @@ AFRAME.registerComponent('smart-cursor', {
 
                 // see if the user has a pointing device (other than mouse)
                 var hasPointer = false;
+
+                var gamePads = navigator.getGamepads();
+
+                for(var i = 0; i < gamePads.length; ++i){
+                    if (gamePads[i] && gamePads[i].pose && gamePads[i].pose.hasOrientation){
+                        hasPointer = true;
+                        break;
+                    }
+                }
 
                 if (hasPointer) {
                     // user has a "native" pointing device, hide the retical
