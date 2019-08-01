@@ -12,6 +12,8 @@ AFRAME.registerSystem('duck-hunt', {
 
         var self = this;
 
+        self.sound = this.sceneEl.components['sound'];
+
         self.utils = {
             show: function (el) {
                 el.setAttribute("visible", "true");
@@ -28,6 +30,8 @@ AFRAME.registerSystem('duck-hunt', {
                 self.startScreen.end();
             },
             start: function () {
+                
+                self.sound.playSound();
                 self.data.startButton.addEventListener("click", self.startScreen.handleStartButtonClick);
 
                 if (self.data.startScreenElements) {

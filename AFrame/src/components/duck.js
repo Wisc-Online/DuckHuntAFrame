@@ -16,11 +16,10 @@ AFRAME.registerComponent('duck', {
             default: 0,
             type: 'number'
         },
-        'camera': {
-            default: null,
+        'target': {
+            default: "[camera]",
             type: 'selector'
-        },
-
+        }
     },
     'init': function () {
 
@@ -39,7 +38,7 @@ AFRAME.registerComponent('duck', {
         this.el.object3D.getWorldPosition(nextPosition);
 
         var cameraPosition = new THREE.Vector3();
-        this.camera.el.object3D.getWorldPosition(cameraPosition);
+        this.data.target.object3D.getWorldPosition(cameraPosition);
 
         var distanceToCamera2 = cameraPosition.distanceToSquared(nextPosition);
 
@@ -57,8 +56,6 @@ AFRAME.registerComponent('duck', {
         }
     },
     'play': function () {
-        this.camera = this.data.camera || this.el.sceneEl.camera;
-
 
         this.el.addEventListener('click', this.eventHandlers.onClick);
     },
