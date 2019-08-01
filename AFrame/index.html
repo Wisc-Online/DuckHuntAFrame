@@ -19,14 +19,16 @@
 </head>
 
 <body>
-    <a-scene background="color: #FAFAFA" sound="positional: false;" duck-hunt="startButton: #startButton; startScreenElements: .startScreen">
+    <a-scene background="color: #FAFAFA"  duck-hunt="startButton: #startButton; startScreenElements: .startScreen; titleScreenMusic : #musicTitleScreen">
         <a-assets>
-            <a-asset-item id="dragon" src="assets/models/dragon.gltf">
+            <a-asset-item id="duckModel" src="assets/models/DuckTest.glb">
             </a-asset-item>
             <a-asset-item id="ship" src="assets/models/ship.gltf">
             </a-asset-item>
 
+            <audio id="musicTitleScreen" src="assets/audio/TitleScreen.mp3" preload="auto"></audio>
         </a-assets>
+
 
         <a-entity id="rig" movement-controls="fly: false; speed: 0.3; constrainToNavMesh: true;">
             <a-entity camera position="0 1.6 0" look-controls="pointerLockEnabled: true" id="theCAMERA">
@@ -71,12 +73,12 @@
 
         <a-entity position="-1 0.5 -3" rotation="30 10 45" id="duck1"
             duck="speed: .003; minDistance: 2; target: #duckTarget">
-            <a-entity class="clickable" position="-1.5 -1 -2.5" scale="0.025 0.025 0.025" gltf-model="#dragon" shadow>
+            <a-entity class="clickable" position="0 0 0" scale="10 10 10" rotation="0 270 0" gltf-model="#duckModel" shadow>
             </a-entity>
         </a-entity>
         <a-entity position="0 1.25 -5" radius="1.25" color="#EF2D5E"
             duck="speed: .004; minDistance: 2; target: #duckTarget">
-            <a-entity class="clickable" position="0 0 0" scale=".1 .1 .1" gltf-model="#ship" shadow></a-entity>
+            <a-entity class="clickable" position="0 0 0" scale="10 10 10" rotation="0 270 0" gltf-model="#duckModel" shadow></a-entity>
         </a-entity>
 
 

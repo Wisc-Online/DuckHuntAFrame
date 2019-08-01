@@ -6,13 +6,32 @@ AFRAME.registerSystem('duck-hunt', {
         },
         startScreenElements: {
             type: 'selectorAll',
+        },
+        titleScreenMusic : {
+            type: 'audio'
         }
     },
     init: function () {
 
         var self = this;
 
-        self.sound = this.sceneEl.components['sound'];
+        var sceneEl = this.sceneEl;
+
+
+        (function(){
+            var soundEl = document.createElement("a-entity");
+
+
+            soundEl.setAttribute("sound", AFRAME.utils.styleParser.stringify({
+                positional: false,
+                autoplay: false
+            }));
+
+            sceneEl.appendChild(soundEl);
+
+            self.sound = soundEl.components.sound;
+        })();
+
 
         self.utils = {
             show: function (el) {
@@ -23,6 +42,21 @@ AFRAME.registerSystem('duck-hunt', {
             }
         };
 
+        function getComponent(el, componentName){
+            if (el && el.components && el.components[componentName]){
+                return el.components[componentName]
+            }
+            return null;
+        }
+
+        function playSound(path){
+            if (self.sound && path){
+                AFRAME.utils.entity.setComponentProperty(self.sound.el, 'sound.src', "url(" + path + ")");
+                //self.sound.src = path;
+                self.sound.playSound();
+            }
+        }
+
         self.startScreen = {
             handleStartButtonClick: function () {
                 console.log("you clicked start!");
@@ -31,7 +65,8 @@ AFRAME.registerSystem('duck-hunt', {
             },
             start: function () {
                 
-                self.sound.playSound();
+                playSound(self.data.titleScreenMusic);
+
                 self.data.startButton.addEventListener("click", self.startScreen.handleStartButtonClick);
 
                 if (self.data.startScreenElements) {
@@ -41,6 +76,7 @@ AFRAME.registerSystem('duck-hunt', {
                 }
             },
             end: function () {
+
                 self.data.startButton.removeEventListener("click", self.startScreen.handleStartButtonClick);
 
                 if (self.data.startScreenElements) {
